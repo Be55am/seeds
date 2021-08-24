@@ -25,7 +25,11 @@ mvn spring-boot:run
 
 ## Accessing the H2 Console
  Access this URL : [H2-CONSOLE](http://localhost:8080/h2-console)
-
+## API Documentation
+ - The OpenAPI descriptions will be available at this [Path](http://localhost:8080/v3/api-docs/).
+ - The OpenAPI definitions are in JSON format by default. For yaml format : [YML Format](http://localhost:8080/api-docs.yaml).
+ - You can access the API documentation at: [SWAGGER UI](http://localhost:8080/swagger-ui.html).
+   
 ## Copyright
 
 Released under the Apache License 2.0. See the [LICENSE](https://github.com/codecentric/springboot-sample-app/blob/master/LICENSE) file.
