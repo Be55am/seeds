@@ -21,12 +21,20 @@ import java.util.Optional;
  */
 
 
-//todo trying to figure out how to make it more dynamic
+
+@RequestMapping("/api")
 public abstract class AbstractController<DTO extends AbstractDTO, SERVICE extends AbstractService<DTO>> {
 
 	public SERVICE service;
 	private Logger log;
-//	private final Logger log = LoggerFactory.getLogger("Abstract Controller ");
+
+	public AbstractController(SERVICE service, Logger log) {
+		System.out.println(service.toString());
+		System.out.println(log.toString());
+
+		this.service = service;
+		this.log = log;
+	}
 
 
 	/**
@@ -49,10 +57,21 @@ public abstract class AbstractController<DTO extends AbstractDTO, SERVICE extend
 	 * @param pageable the pagination information.
 	 * @return the {@link ResponseEntity} with status {@code 200 (OK)} and the list of habitations in body.
 	 */
-	@GetMapping("/pages")
+	@GetMapping("")
 	ResponseEntity<Page<DTO>> findAll(Pageable pageable) {
-		log.debug("REST request to get a page of entities");
-		return ResponseEntity.ok(service.findAll(pageable));
+		System.out.println("Find ALL ...");
+		Page<DTO> page = null;
+		try{
+			page = service.findAll(pageable);
+			System.out.println("Find ALL 2...");
+
+
+		}catch (Exception e){
+			System.out.println(e);
+		}
+		System.out.println("Find ALL ...3");
+
+		return ResponseEntity.ok(page);
 	}
 
 	/**
