@@ -2,9 +2,12 @@ package com.goldminds.common.controller;
 
 import com.goldminds.common.Util.ResponseUtil;
 import com.goldminds.common.dto.AbstractDTO;
+import com.goldminds.common.mapper.AbstractMapper;
+import com.goldminds.common.model.AbstractEntity;
 import com.goldminds.common.service.AbstractService;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -21,7 +24,12 @@ import java.util.Optional;
 
 
 @RequestMapping("/api")
-public abstract class AbstractController<DTO extends AbstractDTO, SERVICE extends AbstractService<DTO>> {
+public abstract class AbstractController<
+		DTO extends AbstractDTO,
+		ENTITY extends AbstractEntity<Long>,
+		MAPPER extends AbstractMapper<ENTITY, DTO>,
+		SERVICE extends AbstractService<DTO, ENTITY, MAPPER, REPOSITORY>,
+		REPOSITORY extends JpaRepository<ENTITY, Long>> {
 
 	public SERVICE service;
 
@@ -51,7 +59,7 @@ public abstract class AbstractController<DTO extends AbstractDTO, SERVICE extend
 	 * @param pageable the pagination information.
 	 * @return the {@link ResponseEntity} with status {@code 200 (OK)} and the list of habitations in body.
 	 */
-	@GetMapping("")
+	@GetMapping
 	ResponseEntity<Page<DTO>> findAll(Pageable pageable) {
 		System.out.println("Find ALL ...");
 		Page<DTO> page = null;
