@@ -3,7 +3,6 @@ package com.goldminds.common.controller;
 import com.goldminds.common.Util.ResponseUtil;
 import com.goldminds.common.dto.AbstractDTO;
 import com.goldminds.common.service.AbstractService;
-import org.slf4j.Logger;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
@@ -21,19 +20,14 @@ import java.util.Optional;
  */
 
 
-
 @RequestMapping("/api")
 public abstract class AbstractController<DTO extends AbstractDTO, SERVICE extends AbstractService<DTO>> {
 
 	public SERVICE service;
-	private Logger log;
 
-	public AbstractController(SERVICE service, Logger log) {
+	public AbstractController(SERVICE service) {
 		System.out.println(service.toString());
-		System.out.println(log.toString());
-
 		this.service = service;
-		this.log = log;
 	}
 
 
@@ -45,7 +39,7 @@ public abstract class AbstractController<DTO extends AbstractDTO, SERVICE extend
 	 */
 	@GetMapping("/{id}")
 	ResponseEntity<DTO> findById(@PathVariable Long id) {
-		log.debug("REST request to get Entity : {}", id);
+		System.out.println("REST request to get Entity : {}" + id);
 		Optional<DTO> dto = service.findById(id);
 		return ResponseUtil.wrapOrNotFound(dto);
 	}
@@ -61,12 +55,12 @@ public abstract class AbstractController<DTO extends AbstractDTO, SERVICE extend
 	ResponseEntity<Page<DTO>> findAll(Pageable pageable) {
 		System.out.println("Find ALL ...");
 		Page<DTO> page = null;
-		try{
+		try {
 			page = service.findAll(pageable);
 			System.out.println("Find ALL 2...");
 
 
-		}catch (Exception e){
+		} catch (Exception e) {
 			System.out.println(e);
 		}
 		System.out.println("Find ALL ...3");
@@ -84,7 +78,7 @@ public abstract class AbstractController<DTO extends AbstractDTO, SERVICE extend
 
 	@PostMapping
 	public ResponseEntity<DTO> save(@RequestBody DTO entity) throws ResponseStatusException, URISyntaxException {
-		log.debug("REST request to save Habitation : {}", entity);
+		System.out.println("REST request to save Habitation : {}");
 		if (entity.getId() != null) {
 			throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "THE ID SHOULD BE NULL");
 		} else {
@@ -108,7 +102,7 @@ public abstract class AbstractController<DTO extends AbstractDTO, SERVICE extend
 	 */
 	@PutMapping("/{id}")
 	public ResponseEntity<DTO> update(@PathVariable Long id, @RequestBody DTO entity) throws URISyntaxException {
-		log.debug("REST request to update Address : {}, {}", id, entity);
+		System.out.println("REST request to update Address : {}, {}");
 		if (entity.getId() == null) {
 			throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "INVALID ID");
 		}
@@ -135,7 +129,7 @@ public abstract class AbstractController<DTO extends AbstractDTO, SERVICE extend
 
 	@DeleteMapping("/{id}")
 	public ResponseEntity<Void> delete(@PathVariable Long id) {
-		log.debug("REST request to delete Entity : {}", id);
+		System.out.println("REST request to delete Entity : {}" + id);
 		service.removeById(id);
 		return ResponseEntity
 				.noContent()

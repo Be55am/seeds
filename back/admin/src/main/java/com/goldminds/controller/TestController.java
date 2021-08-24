@@ -2,7 +2,6 @@ package com.goldminds.controller;
 
 import com.goldminds.dto.TestDTO;
 import com.goldminds.service.TestService;
-import org.slf4j.LoggerFactory;
 import org.springframework.web.bind.annotation.RestController;
 
 /**
@@ -15,7 +14,7 @@ import org.springframework.web.bind.annotation.RestController;
 public class TestController extends com.goldminds.common.controller.AbstractController<TestDTO, TestService> {
 
 	public TestController(TestService service) {
-		super(service, LoggerFactory.getLogger("Test Controller "));
+		super(service);
 		System.out.println("Initializing Test Controller");
 
 	}
