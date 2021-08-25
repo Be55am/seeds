@@ -9,3 +9,9 @@ spring:
       enabled: true
   jpa:
     database-platform: org.hibernate.dialect.H2Dialect
+
+# LOGGING LEVEL
+logging:
+  level:
+    com:
+      goldminds: debug
