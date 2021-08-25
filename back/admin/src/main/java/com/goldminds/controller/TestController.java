@@ -6,15 +6,16 @@ import com.goldminds.dto.TestDTO;
 import com.goldminds.mapper.TestMapper;
 import com.goldminds.repository.TestRepository;
 import com.goldminds.service.TestService;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 /**
  * @author bessam on 22/08/2021
  */
 
-// todo the route here is not concidered
 
-@RestController("/test")
+@RestController
+@RequestMapping("/test")
 public class TestController extends AbstractController<TestDTO, Test, TestMapper, TestService, TestRepository> {
 
 	public TestController(TestService service) {

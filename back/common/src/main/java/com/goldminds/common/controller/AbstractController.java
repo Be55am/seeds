@@ -5,6 +5,7 @@ import com.goldminds.common.dto.AbstractDTO;
 import com.goldminds.common.mapper.AbstractMapper;
 import com.goldminds.common.model.AbstractEntity;
 import com.goldminds.common.service.AbstractService;
+import lombok.AllArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -23,7 +24,7 @@ import java.util.Optional;
  */
 
 
-@RequestMapping("/api")
+@AllArgsConstructor
 public abstract class AbstractController<
 		DTO extends AbstractDTO,
 		ENTITY extends AbstractEntity<Long>,
@@ -32,11 +33,6 @@ public abstract class AbstractController<
 		REPOSITORY extends JpaRepository<ENTITY, Long>> {
 
 	public SERVICE service;
-
-	public AbstractController(SERVICE service) {
-		System.out.println(service.toString());
-		this.service = service;
-	}
 
 
 	/**
@@ -59,7 +55,7 @@ public abstract class AbstractController<
 	 * @param pageable the pagination information.
 	 * @return the {@link ResponseEntity} with status {@code 200 (OK)} and the list of habitations in body.
 	 */
-	@GetMapping
+	@GetMapping("/pages")
 	ResponseEntity<Page<DTO>> findAll(Pageable pageable) {
 		System.out.println("Find ALL ...");
 		Page<DTO> page = null;
