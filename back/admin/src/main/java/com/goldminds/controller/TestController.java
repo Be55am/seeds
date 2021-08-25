@@ -7,7 +7,6 @@ import com.goldminds.mapper.TestMapper;
 import com.goldminds.repository.TestRepository;
 import com.goldminds.service.TestService;
 import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -20,9 +19,7 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping("/test")
 public class TestController extends AbstractController<TestDTO, Test, TestMapper, TestService, TestRepository> {
 
-	Logger logger = LoggerFactory.getLogger(TestController.class);
-
-	public TestController(TestService service) {
+	public TestController(TestService service, Logger logger) {
 		super(service);
 		logger.info("Starting Controller ################## INFO");
 		logger.error("Starting Controller ################## ERROR");
