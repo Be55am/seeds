@@ -20,7 +20,7 @@ public class LoggerProvider {
 
 	/**
 	 * get a logging bean SL4J logger instance
-	 * @param injectionPoint
+	 * @param injectionPoint the injection point will be injected
 	 * @return logger
 	 */
 	@Bean
