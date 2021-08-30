@@ -6,6 +6,7 @@ import com.goldminds.common.mapper.AbstractMapper;
 import com.goldminds.common.model.AbstractEntity;
 import com.goldminds.common.service.AbstractService;
 import lombok.AllArgsConstructor;
+import org.slf4j.Logger;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -34,6 +35,8 @@ public abstract class AbstractController<
 
 	public SERVICE service;
 
+	private Logger logger;
+
 
 	/**
 	 * {@code GET  /:id} : get the entity id.
@@ -43,7 +46,6 @@ public abstract class AbstractController<
 	 */
 	@GetMapping("/{id}")
 	ResponseEntity<DTO> findById(@PathVariable Long id) {
-		System.out.println("REST request to get Entity : {}" + id);
 		Optional<DTO> dto = service.findById(id);
 		return ResponseUtil.wrapOrNotFound(dto);
 	}
@@ -57,17 +59,13 @@ public abstract class AbstractController<
 	 */
 	@GetMapping("/pages")
 	ResponseEntity<Page<DTO>> findAll(Pageable pageable) {
-		System.out.println("Find ALL ...");
 		Page<DTO> page = null;
 		try {
 			page = service.findAll(pageable);
-			System.out.println("Find ALL 2...");
-
 
 		} catch (Exception e) {
-			System.out.println(e);
+			logger.error("Error getting entity pages ", e);
 		}
-		System.out.println("Find ALL ...3");
 
 		return ResponseEntity.ok(page);
 	}
@@ -82,7 +80,6 @@ public abstract class AbstractController<
 
 	@PostMapping
 	public ResponseEntity<DTO> save(@RequestBody DTO entity) throws ResponseStatusException, URISyntaxException {
-		System.out.println("REST request to save Habitation : {}");
 		if (entity.getId() != null) {
 			throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "THE ID SHOULD BE NULL");
 		} else {
@@ -106,7 +103,6 @@ public abstract class AbstractController<
 	 */
 	@PutMapping("/{id}")
 	public ResponseEntity<DTO> update(@PathVariable Long id, @RequestBody DTO entity) throws URISyntaxException {
-		System.out.println("REST request to update Address : {}, {}");
 		if (entity.getId() == null) {
 			throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "INVALID ID");
 		}
@@ -133,7 +129,6 @@ public abstract class AbstractController<
 
 	@DeleteMapping("/{id}")
 	public ResponseEntity<Void> delete(@PathVariable Long id) {
-		System.out.println("REST request to delete Entity : {}" + id);
 		service.removeById(id);
 		return ResponseEntity
 				.noContent()

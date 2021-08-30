@@ -1,10 +1,10 @@
-package com.goldminds.service;
+package com.goldminds.core.service;
 
 import com.goldminds.common.model.Test;
 import com.goldminds.common.service.AbstractService;
-import com.goldminds.dto.TestDTO;
-import com.goldminds.mapper.TestMapper;
-import com.goldminds.repository.TestRepository;
+import com.goldminds.core.dto.TestDTO;
+import com.goldminds.core.mapper.TestMapper;
+import com.goldminds.core.repository.TestRepository;
 import org.springframework.stereotype.Service;
 
 /**

@@ -1,14 +1,15 @@
-package com.goldminds.controller;
+package com.goldminds.admin.controller;
 
 import com.goldminds.common.controller.AbstractController;
 import com.goldminds.common.model.Test;
-import com.goldminds.dto.TestDTO;
-import com.goldminds.mapper.TestMapper;
-import com.goldminds.repository.TestRepository;
-import com.goldminds.service.TestService;
+import com.goldminds.core.dto.TestDTO;
+import com.goldminds.core.mapper.TestMapper;
+import com.goldminds.core.repository.TestRepository;
+import com.goldminds.core.service.TestService;
 import org.slf4j.Logger;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+
 
 /**
  * @author bessam on 22/08/2021
@@ -20,13 +21,7 @@ import org.springframework.web.bind.annotation.RestController;
 public class TestController extends AbstractController<TestDTO, Test, TestMapper, TestService, TestRepository> {
 
 	public TestController(TestService service, Logger logger) {
-		super(service);
-		logger.info("Starting Controller ################## INFO");
-		logger.error("Starting Controller ################## ERROR");
-		logger.warn("Starting Controller ################## WARN");
-		logger.debug("Starting Controller ################## DEBUG");
-
-
+		super(service, logger);
 	}
 
 
