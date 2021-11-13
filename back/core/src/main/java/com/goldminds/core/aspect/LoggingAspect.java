@@ -24,12 +24,12 @@ public class LoggingAspect {
 		logger.info("#################STARTING THE LOGGING ASPECT #########################");
 	}
 
-	@Before("execution(public * com.goldminds.core.*.*.*(..)) || execution(public * com.goldminds.common.*.*Abstract*.*(..))")
+	@Before("execution(public * com.goldminds.core.*.*.*(..)) || execution(public * com.goldminds.common.service.*Abstract*.*(..))")
 	public void logMethodInfo(JoinPoint joinPoint) {
 		logger.debug(joinPoint.getSignature().getDeclaringTypeName() + " : " + joinPoint.getSignature().getName() + " : " + Arrays.toString(joinPoint.getArgs()));
 	}
 
-	@AfterReturning(value = "execution(public * com.goldminds.core.*.*.*(..)) || execution(public * com.goldminds.common.*.*Abstract*.*(..))", returning = "result")
+	@AfterReturning(value = "execution(public * com.goldminds.core.*.*.*(..)) || execution(public * com.goldminds.common.service.*Abstract*.*(..))", returning = "result")
 	public void afterRunningLog(JoinPoint joinPoint, Object result) {
 		logger.debug("{} returned with value {}", joinPoint.getSignature().getDeclaringTypeName(), result);
 	}

@@ -17,6 +17,7 @@ import org.springframework.web.server.ResponseStatusException;
 
 import java.net.URI;
 import java.net.URISyntaxException;
+import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
 
@@ -51,6 +52,12 @@ public abstract class AbstractController<
 	}
 
 
+	@GetMapping
+	ResponseEntity<List<DTO>> findAll(){
+		return ResponseEntity.ok(service.findAll());
+	}
+
+
 	/**
 	 * {@code GET  /habitations} : get all the entities.
 	 *
@@ -59,6 +66,7 @@ public abstract class AbstractController<
 	 */
 	@GetMapping("/pages")
 	ResponseEntity<Page<DTO>> findAll(Pageable pageable) {
+		logger.debug("Getting all entities");
 		Page<DTO> page = null;
 		try {
 			page = service.findAll(pageable);
