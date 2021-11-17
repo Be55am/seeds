@@ -110,6 +110,7 @@
         <module>common</module>
         <module>core</module>
         <module>admin</module>
+        <module>security</module>
     </modules>
 
 </project>

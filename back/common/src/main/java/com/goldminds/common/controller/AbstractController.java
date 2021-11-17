@@ -39,65 +39,8 @@ public abstract class AbstractController<
 	private Logger logger;
 
 
-	/**
-	 * {@code GET  /:id} : get the entity id.
-	 *
-	 * @param id the id of the DTO to retrieve.
-	 * @return the {@link ResponseEntity} with status {@code 200 (OK)} and with body the addressDTO, or with status {@code 404 (Not Found)}.
-	 */
-	@GetMapping("/{id}")
-	ResponseEntity<DTO> findById(@PathVariable Long id) {
-		Optional<DTO> dto = service.findById(id);
-		return ResponseUtil.wrapOrNotFound(dto);
-	}
 
 
-	@GetMapping
-	ResponseEntity<List<DTO>> findAll(){
-		return ResponseEntity.ok(service.findAll());
-	}
-
-
-	/**
-	 * {@code GET  /habitations} : get all the entities.
-	 *
-	 * @param pageable the pagination information.
-	 * @return the {@link ResponseEntity} with status {@code 200 (OK)} and the list of habitations in body.
-	 */
-	@GetMapping("/pages")
-	ResponseEntity<Page<DTO>> findAll(Pageable pageable) {
-		logger.debug("Getting all entities");
-		Page<DTO> page = null;
-		try {
-			page = service.findAll(pageable);
-
-		} catch (Exception e) {
-			logger.error("Error getting entity pages ", e);
-		}
-
-		return ResponseEntity.ok(page);
-	}
-
-	/**
-	 * {@code POST  /habitations} : Create a new entity.
-	 *
-	 * @param entity the entity to create.
-	 * @return the {@link ResponseEntity} with status {@code 201 (Created)} and with body the new habitationDTO, or with status {@code 400 (Bad Request)} if the entity has already an ID.
-	 * @throws ResponseStatusException if the Location URI syntax is incorrect.
-	 */
-
-	@PostMapping
-	public ResponseEntity<DTO> save(@RequestBody DTO entity) throws ResponseStatusException, URISyntaxException {
-		if (entity.getId() != null) {
-			throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "THE ID SHOULD BE NULL");
-		} else {
-			DTO result = service.save(entity);
-			return ResponseEntity
-					.created(new URI("/" + result.getId()))
-					.body(result);
-		}
-
-	}
 
 	/**
 	 * {@code PUT  /:id} : Updates an existing entity.

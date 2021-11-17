@@ -25,36 +25,9 @@ public abstract class AbstractService<
 	private REPOSITORY repository;
 	private MAPPER mapper;
 
-	public DTO save(DTO dto) {
-		return mapper.toDTO(repository.save(mapper.toEntity(dto)));
-	}
-
-	public List<DTO> saveAll(Collection<DTO> collection) {
-		return repository.saveAll(collection.parallelStream().map(l -> mapper.toEntity(l)).collect(Collectors.toList()))
-				.stream()
-				.map(entity -> mapper.toDTO(entity))
-				.collect(Collectors.toList());
-
-	}
-
-	public List<DTO> findAll() {
-		return repository.findAll().parallelStream().map(entity -> mapper.toDTO(entity)).collect(Collectors.toList());
-	}
 
 
-	public Optional<DTO> findById(long id) {
-		return repository.findById(id).map(entity -> mapper.toDTO(entity));
-	}
 
-
-	public Page<DTO> findAll(Pageable pageable) {
-		return repository.findAll(pageable).map(entity -> mapper.toDTO(entity));
-	}
-
-
-	public boolean existsById(Long id) {
-		return repository.existsById(id);
-	}
 
 	public void removeById(long id) {
 		repository.deleteById(id);
