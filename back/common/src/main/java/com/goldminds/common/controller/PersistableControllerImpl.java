@@ -2,8 +2,12 @@ package com.goldminds.common.controller;
 
 import com.goldminds.common.dto.AbstractDTO;
 import com.goldminds.common.service.Persistable;
+import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Controller;
+import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.server.ResponseStatusException;
@@ -12,6 +16,7 @@ import java.net.URI;
 import java.net.URISyntaxException;
 import java.util.Collection;
 
+@AllArgsConstructor
 public class PersistableControllerImpl<DTO extends AbstractDTO,
         SERVICE extends Persistable<DTO>> implements PersistableController<DTO> {
 

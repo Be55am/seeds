@@ -1,14 +1,18 @@
 package com.goldminds.admin.controller;
 
-import com.goldminds.common.controller.AbstractController;
-import com.goldminds.common.model.Test;
+import com.goldminds.common.controller.PersistableController;
+import com.goldminds.common.controller.PersistableControllerImpl;
+import com.goldminds.common.controller.QueryableController;
+import com.goldminds.common.controller.QueryableControllerImpl;
 import com.goldminds.core.dto.TestDTO;
-import com.goldminds.core.mapper.TestMapper;
-import com.goldminds.core.repository.TestRepository;
 import com.goldminds.core.service.TestService;
-import org.slf4j.Logger;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
+
+import java.net.URISyntaxException;
+import java.util.Collection;
 
 
 /**
@@ -18,11 +22,44 @@ import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @RequestMapping("/test")
-public class TestController extends AbstractController<TestDTO, Test, TestMapper, TestService, TestRepository> {
+public class TestController implements PersistableController<TestDTO>, QueryableController<TestDTO> {
 
-	public TestController(TestService service, Logger logger) {
-		super(service, logger);
-	}
+    private final PersistableControllerImpl<TestDTO, TestService> persistableController;
+    private final QueryableControllerImpl<TestDTO, TestService> queryableController;
+
+    public TestController(TestService testService) {
+        this.persistableController = new PersistableControllerImpl<>(testService);
+        this.queryableController = new QueryableControllerImpl<>(testService);
+    }
 
 
+    @Override
+    @PostMapping
+    public ResponseEntity<TestDTO> save(TestDTO dto) throws URISyntaxException {
+        return persistableController.save(dto);
+    }
+
+    @Override
+    @PostMapping("/all")
+    public ResponseEntity<Collection<TestDTO>> saveAll(Collection<TestDTO> list) {
+        return persistableController.saveAll(list);
+    }
+
+    @Override
+    @GetMapping("/{id}")
+    public ResponseEntity<TestDTO> findById(@PathVariable Long id) {
+        return queryableController.findById(id);
+    }
+
+    @Override
+    @GetMapping
+    public ResponseEntity<Collection<TestDTO>> findAll() {
+        return queryableController.findAll();
+    }
+
+    @Override
+    @GetMapping("/pages")
+    public ResponseEntity<Page<TestDTO>> findAll(Pageable pageable) {
+        return queryableController.findAll(pageable);
+    }
 }

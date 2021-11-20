@@ -3,14 +3,17 @@ package com.goldminds.common.service;
 import com.goldminds.common.dto.AbstractDTO;
 import com.goldminds.common.mapper.AbstractMapper;
 import com.goldminds.common.model.AbstractEntity;
+import lombok.AllArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.stereotype.Component;
 
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
+@AllArgsConstructor
 public class QueryableImpl
         <DTO extends AbstractDTO,
                 ENTITY extends AbstractEntity<Long>,
