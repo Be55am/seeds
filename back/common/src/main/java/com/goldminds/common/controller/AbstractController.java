@@ -42,49 +42,7 @@
 //
 //
 //
-//	/**
-//	 * {@code PUT  /:id} : Updates an existing entity.
-//	 *
-//	 * @param id     the id of the entity to save.
-//	 * @param entity the entity to update.
-//	 * @return the {@link ResponseEntity} with status {@code 200 (OK)} and with body the updated entity,
-//	 * or with status {@code 400 (Bad Request)} if the entity is not valid,
-//	 * or with status {@code 500 (Internal Server Error)} if the entity couldn't be updated.
-//	 * @throws URISyntaxException if the Location URI syntax is incorrect.
-//	 */
-//	@PutMapping("/{id}")
-//	public ResponseEntity<DTO> update(@PathVariable Long id, @RequestBody DTO entity) throws URISyntaxException {
-//		if (entity.getId() == null) {
-//			throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "INVALID ID");
-//		}
-//		if (!Objects.equals(id, entity.getId())) {
-//			throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "INVALID ID");
-//		}
-//
-//		if (!service.existsById(id)) {
-//			throw new ResponseStatusException(HttpStatus.NOT_FOUND, "ENTITY WITH ID " + id + " IS NOT FOUND !");
-//		}
-//
-//		DTO result = service.save(entity);
-//		return ResponseEntity
-//				.created(new URI("/" + result.getId()))
-//				.body(result);
-//	}
-//
-//	/**
-//	 * {@code DELETE  /:id} : delete the "id" entity.
-//	 *
-//	 * @param id the id of the entity to delete.
-//	 * @return the {@link ResponseEntity} with status {@code 204 (NO_CONTENT)}.
-//	 */
-//
-//	@DeleteMapping("/{id}")
-//	public ResponseEntity<Void> delete(@PathVariable Long id) {
-//		service.removeById(id);
-//		return ResponseEntity
-//				.noContent()
-//				.build();
-//	}
+
 //
 //
 //}

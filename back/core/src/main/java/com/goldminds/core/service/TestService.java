@@ -1,10 +1,7 @@
 package com.goldminds.core.service;
 
 import com.goldminds.common.model.Test;
-import com.goldminds.common.service.Persistable;
-import com.goldminds.common.service.PersistableImpl;
-import com.goldminds.common.service.Queryable;
-import com.goldminds.common.service.QueryableImpl;
+import com.goldminds.common.service.*;
 import com.goldminds.core.dto.TestDTO;
 import com.goldminds.core.mapper.TestMapper;
 import com.goldminds.core.repository.TestRepository;
@@ -21,43 +18,62 @@ import java.util.Optional;
  */
 
 @Service
-public class TestService implements Persistable<TestDTO>, Queryable<TestDTO> {
+public class TestService implements
+        Persistable<TestDTO>,
+        Queryable<TestDTO>,
+        Updatable<TestDTO>,
+        Removable<TestDTO> {
 
-	private final PersistableImpl<TestDTO,Test,TestMapper,TestRepository> persistable;
-	private final QueryableImpl<TestDTO, Test, TestMapper, TestRepository> queryable;
+    private final PersistableImpl<TestDTO, Test, TestMapper, TestRepository> persistable;
+    private final QueryableImpl<TestDTO, Test, TestMapper, TestRepository> queryable;
+    private final UpdatableImpl<TestDTO, Test, TestMapper, TestRepository> updatable;
+    private final RemovableImpl<TestDTO, Test, TestRepository> removable;
 
-	public TestService(TestRepository testRepository, TestMapper testMapper) {
-		this.persistable = new PersistableImpl<>(testRepository,testMapper);
-		this.queryable = new QueryableImpl<>(testRepository, testMapper);
-	}
 
-	@Override
-	public TestDTO save(TestDTO dto) {
-		return persistable.save(dto);
-	}
+    public TestService(TestRepository testRepository, TestMapper testMapper) {
+        this.persistable = new PersistableImpl<>(testRepository, testMapper);
+        this.queryable = new QueryableImpl<>(testRepository, testMapper);
+        this.updatable = new UpdatableImpl<>(testRepository, testMapper);
+        this.removable = new RemovableImpl<>(testRepository);
+    }
 
-	@Override
-	public Collection<TestDTO> saveAll(Collection<TestDTO> list) {
-		return persistable.saveAll(list);
-	}
+    @Override
+    public TestDTO save(TestDTO dto) {
+        return persistable.save(dto);
+    }
 
-	@Override
-	public List<TestDTO> findAll() {
-		return queryable.findAll();
-	}
+    @Override
+    public Collection<TestDTO> saveAll(Collection<TestDTO> list) {
+        return persistable.saveAll(list);
+    }
 
-	@Override
-	public Optional<TestDTO> findById(long id) {
-		return queryable.findById(id);
-	}
+    @Override
+    public List<TestDTO> findAll() {
+        return queryable.findAll();
+    }
 
-	@Override
-	public Page<TestDTO> findAll(Pageable pageable) {
-		return queryable.findAll(pageable);
-	}
+    @Override
+    public Optional<TestDTO> findById(long id) {
+        return queryable.findById(id);
+    }
 
-	@Override
-	public boolean existsById(Long id) {
-		return queryable.existsById(id);
-	}
+    @Override
+    public Page<TestDTO> findAll(Pageable pageable) {
+        return queryable.findAll(pageable);
+    }
+
+    @Override
+    public boolean existsById(Long id) {
+        return queryable.existsById(id);
+    }
+
+    @Override
+    public void removeById(long id) {
+        removable.removeById(id);
+    }
+
+    @Override
+    public TestDTO update(TestDTO dto) {
+        return updatable.update(dto);
+    }
 }

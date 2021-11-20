@@ -1,9 +1,6 @@
 package com.goldminds.admin.controller;
 
-import com.goldminds.common.controller.PersistableController;
-import com.goldminds.common.controller.PersistableControllerImpl;
-import com.goldminds.common.controller.QueryableController;
-import com.goldminds.common.controller.QueryableControllerImpl;
+import com.goldminds.common.controller.*;
 import com.goldminds.core.dto.TestDTO;
 import com.goldminds.core.service.TestService;
 import org.springframework.data.domain.Page;
@@ -22,14 +19,22 @@ import java.util.Collection;
 
 @RestController
 @RequestMapping("/test")
-public class TestController implements PersistableController<TestDTO>, QueryableController<TestDTO> {
+public class TestController implements
+        PersistableController<TestDTO>,
+        QueryableController<TestDTO>,
+        UpdatableController<TestDTO>,
+        RemovableController<TestDTO> {
 
-    private final PersistableControllerImpl<TestDTO, TestService> persistableController;
-    private final QueryableControllerImpl<TestDTO, TestService> queryableController;
+    private final PersistableController<TestDTO> persistableController;
+    private final QueryableController<TestDTO> queryableController;
+    private final RemovableController<TestDTO> removableController;
+    private final UpdatableController<TestDTO> updatableController;
 
     public TestController(TestService testService) {
         this.persistableController = new PersistableControllerImpl<>(testService);
         this.queryableController = new QueryableControllerImpl<>(testService);
+        this.removableController = new RemovableControllerImpl<>(testService);
+        this.updatableController = new UpdatableControllerImpl<>(testService);
     }
 
 
@@ -61,5 +66,17 @@ public class TestController implements PersistableController<TestDTO>, Queryable
     @GetMapping("/pages")
     public ResponseEntity<Page<TestDTO>> findAll(Pageable pageable) {
         return queryableController.findAll(pageable);
+    }
+
+    @Override
+    @DeleteMapping("/{id}")
+    public ResponseEntity<Void> delete(@PathVariable Long id) {
+        return removableController.delete(id);
+    }
+
+    @Override
+    @PutMapping("/{id}")
+    public ResponseEntity<TestDTO> update(@PathVariable Long id, @RequestBody TestDTO testDTO) {
+        return updatableController.update(id, testDTO);
     }
 }

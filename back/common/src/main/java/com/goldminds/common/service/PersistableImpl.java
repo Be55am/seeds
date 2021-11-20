@@ -5,7 +5,6 @@ import com.goldminds.common.mapper.AbstractMapper;
 import com.goldminds.common.model.AbstractEntity;
 import lombok.AllArgsConstructor;
 import org.springframework.data.jpa.repository.JpaRepository;
-import org.springframework.stereotype.Component;
 
 import java.util.Collection;
 import java.util.List;
